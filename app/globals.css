@@ -2,26 +2,111 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 30 20% 98%;
+    --foreground: 224 30% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 224 30% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 30% 12%;
+
+    --primary: 24.6 95% 53.1%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 30 20% 95%;
+    --secondary-foreground: 224 20% 25%;
+
+    --muted: 30 15% 94%;
+    --muted-foreground: 220 10% 52%;
+
+    --accent: 30 80% 95%;
+    --accent-foreground: 24.6 95% 40%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 30 15% 88%;
+    --input: 30 15% 90%;
+    --ring: 24.6 95% 53.1%;
+
+    --radius: 0.875rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-feature-settings: "kern" 1, "liga" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-bold tracking-tight;
+  }
+
+  /* Scrollbar fine */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 99px;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .field-label {
+    @apply text-xs font-semibold uppercase tracking-wider;
+    color: hsl(var(--muted-foreground));
+  }
 }
 
 @layer utilities {
+  .bg-warm {
+    background-color: hsl(30 20% 98%);
+  }
+
+  .shadow-card {
+    box-shadow: 0 1px 4px 0 rgb(0 0 0 / 0.05), 0 2px 8px 0 rgb(0 0 0 / 0.04);
+  }
+
+  .shadow-soft {
+    box-shadow: 0 4px 24px 0 rgb(0 0 0 / 0.08);
+  }
+
+  .shadow-orange {
+    box-shadow: 0 4px 16px 0 rgb(249 115 22 / 0.30);
+  }
+
+  .h-13 {
+    height: 3.25rem;
+  }
+
+  .touch-target {
+    @apply min-h-[48px] flex items-center justify-center;
+  }
+
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Gradient hero orange */
+  .bg-hero {
+    background: linear-gradient(145deg, #f97316 0%, #ea6c0a 60%, #d96007 100%);
   }
 }

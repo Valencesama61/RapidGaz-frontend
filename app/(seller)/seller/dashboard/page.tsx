@@ -68,7 +68,7 @@ export default function SellerDashboardPage() {
     )
   }
 
-  const firstName = user?.name?.split(' ')[0] ?? ''
+  const firstName = (user?.name?.trim() || seller?.displayName || '').split(' ')[0]
   const isOpen = seller?.isOpen ?? false
 
   return (

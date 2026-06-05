@@ -5,7 +5,9 @@ import { useRouter } from 'next/navigation'
 import { SellerCard } from '@/components/shared/SellerCard'
 import apiClient from '@/lib/axios'
 import { AdminSeller, PagedResponse } from '@/types'
-import { Loader2, AlertCircle, Search, Users } from 'lucide-react'
+import { Loader2, AlertCircle, Search, Users, ChevronLeft, ChevronRight } from 'lucide-react'
+
+const PAGE_SIZE = 15
 
 export default function AdminSellersPage() {
   const router = useRouter()
@@ -14,15 +16,20 @@ export default function AdminSellersPage() {
   const [actionLoading, setActionLoading] = useState<number | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [search, setSearch] = useState('')
+  const [page, setPage] = useState(0)
+  const [totalPages, setTotalPages] = useState(0)
+  const [totalElements, setTotalElements] = useState(0)
 
-  const fetchSellers = useCallback(async () => {
+  const fetchSellers = useCallback(async (pageNum: number) => {
     setLoading(true)
     setError(null)
     try {
       const res = await apiClient.get<PagedResponse<AdminSeller>>('/api/admin/sellers', {
-        params: { page: 0, size: 100 },
+        params: { page: pageNum, size: PAGE_SIZE },
       })
       setSellers(res.data.content)
+      setTotalPages(res.data.totalPages)
+      setTotalElements(res.data.totalElements)
     } catch {
       setError('Impossible de charger la liste des vendeurs.')
     } finally {
@@ -30,7 +37,7 @@ export default function AdminSellersPage() {
     }
   }, [])
 
-  useEffect(() => { fetchSellers() }, [fetchSellers])
+  useEffect(() => { fetchSellers(page) }, [fetchSellers, page])
 
   const handleSuspend = async (id: number) => {
     setActionLoading(id)
@@ -58,14 +65,15 @@ export default function AdminSellersPage() {
     }
   }
 
-  const filtered = sellers.filter(
-    (s) =>
-      s.displayName.toLowerCase().includes(search.toLowerCase()) ||
-      s.email.toLowerCase().includes(search.toLowerCase())
-  )
+  const isSearching = search.trim().length > 0
 
-  const activeCount    = sellers.filter(s => s.isActive).length
-  const suspendedCount = sellers.filter(s => !s.isActive).length
+  const filtered = isSearching
+    ? sellers.filter(
+        (s) =>
+          s.displayName.toLowerCase().includes(search.toLowerCase()) ||
+          s.email.toLowerCase().includes(search.toLowerCase())
+      )
+    : sellers
 
   if (loading) {
     return (
@@ -83,20 +91,9 @@ export default function AdminSellersPage() {
       <div>
         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-0.5">Admin</p>
         <h1 className="text-2xl font-extrabold text-foreground">Vendeurs</h1>
-      </div>
-
-      {/* Stats rapides */}
-      <div className="grid grid-cols-3 gap-3">
-        {[
-          { label: 'Total',    value: sellers.length, color: 'bg-orange-50 text-orange-600' },
-          { label: 'Actifs',   value: activeCount,    color: 'bg-emerald-50 text-emerald-600' },
-          { label: 'Suspendus',value: suspendedCount, color: 'bg-red-50 text-red-600' },
-        ].map(stat => (
-          <div key={stat.label} className="bg-white rounded-2xl border border-border/60 shadow-card p-3 text-center">
-            <p className={`text-2xl font-extrabold ${stat.color.split(' ')[1]}`}>{stat.value}</p>
-            <p className="text-[10px] font-semibold text-muted-foreground mt-0.5">{stat.label}</p>
-          </div>
-        ))}
+        <p className="text-sm text-muted-foreground mt-0.5">
+          {totalElements} vendeur{totalElements !== 1 ? 's' : ''} au total
+        </p>
       </div>
 
       {error && (
@@ -125,7 +122,9 @@ export default function AdminSellersPage() {
         {filtered.length === 0 ? (
           <div className="bg-white rounded-2xl border border-border/60 shadow-card p-10 text-center space-y-2">
             <Users className="h-8 w-8 text-muted-foreground mx-auto" />
-            <p className="text-sm font-semibold text-foreground">Aucun vendeur trouvé</p>
+            <p className="text-sm font-semibold text-foreground">
+              {isSearching ? 'Aucun résultat sur cette page' : 'Aucun vendeur trouvé'}
+            </p>
           </div>
         ) : (
           filtered.map((seller) => (
@@ -140,6 +139,37 @@ export default function AdminSellersPage() {
           ))
         )}
       </div>
+
+      {/* Pagination */}
+      {!isSearching && totalPages > 1 && (
+        <div className="flex items-center justify-between pt-1">
+          <p className="text-xs text-muted-foreground font-medium">
+            Page {page + 1} / {totalPages}
+          </p>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setPage((p) => p - 1)}
+              disabled={page === 0}
+              className="h-9 px-3 flex items-center gap-1 rounded-xl border border-border
+                         text-sm font-semibold text-muted-foreground
+                         hover:bg-muted transition-colors disabled:opacity-40"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Préc.
+            </button>
+            <button
+              onClick={() => setPage((p) => p + 1)}
+              disabled={page >= totalPages - 1}
+              className="h-9 px-3 flex items-center gap-1 rounded-xl border border-border
+                         text-sm font-semibold text-muted-foreground
+                         hover:bg-muted transition-colors disabled:opacity-40"
+            >
+              Suiv.
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

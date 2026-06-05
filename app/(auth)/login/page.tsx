@@ -94,9 +94,11 @@ export default function LoginPage() {
 
       {/* Logo */}
       <div className="text-center space-y-1">
-        <div className="inline-flex items-center justify-center w-14 h-14 bg-orange-500 rounded-2xl shadow-orange-lg mb-2">
-          <Flame className="h-7 w-7 text-white" />
-        </div>
+        <Link href="/">
+          <div className="inline-flex items-center justify-center w-14 h-14 bg-orange-500 rounded-2xl shadow-orange-lg mb-2">
+            <Flame className="h-7 w-7 text-white" />
+          </div>
+        </Link>
         <h1 className="text-2xl font-extrabold text-foreground tracking-tight">RapidGaz</h1>
         <p className="text-sm text-muted-foreground font-medium">Connectez-vous à votre espace</p>
       </div>

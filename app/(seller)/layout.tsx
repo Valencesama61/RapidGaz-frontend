@@ -37,7 +37,7 @@ export default function SellerLayout({ children }: { children: React.ReactNode }
   if (!token || role !== 'SELLER') return null
 
   return (
-    <div className="min-h-screen bg-warm">
+    <div className="min-h-screen bg-warm overflow-x-hidden">
       <SellerNav />
       <main className="md:ml-64 pb-20 md:pb-0">
         <div className="max-w-4xl mx-auto p-4 md:p-6">

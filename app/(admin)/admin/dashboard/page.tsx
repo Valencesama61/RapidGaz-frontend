@@ -60,17 +60,17 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
+      <div className="flex items-center justify-between gap-3">
+        <div className="min-w-0 flex-1">
           <h1 className="text-2xl font-bold text-gray-900">Tableau de bord</h1>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <p className="text-sm text-gray-500 mt-0.5 truncate">
             Bienvenue, {user?.name || 'Administrateur'}
           </p>
         </div>
         <Button
           variant="outline"
           onClick={handleLogout}
-          className="h-10 text-gray-600 border-gray-200"
+          className="h-10 text-gray-600 border-gray-200 shrink-0"
         >
           <LogOut className="h-4 w-4 mr-1.5" />
           <span className="hidden sm:inline">Se déconnecter</span>
@@ -90,11 +90,11 @@ export default function AdminDashboardPage() {
           return (
             <Card key={card.label} className="rounded-xl shadow-sm border border-gray-200">
               <CardContent className="p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide leading-tight min-w-0">
                     {card.label}
                   </p>
-                  <Icon className={`h-4 w-4 ${card.color}`} />
+                  <Icon className={`h-4 w-4 ${card.color} shrink-0 mt-0.5`} />
                 </div>
                 <p className="text-3xl font-bold text-gray-900">{card.value}</p>
               </CardContent>

@@ -80,13 +80,13 @@ export default function SellerDashboardPage() {
         <div className="absolute -top-6 -right-6 w-28 h-28 bg-white/10 rounded-full" />
         <div className="absolute -bottom-8 -right-2 w-20 h-20 bg-white/10 rounded-full" />
 
-        <div className="relative flex items-start justify-between">
-          <div className="space-y-1">
+        <div className="relative flex items-start justify-between gap-3">
+          <div className="space-y-1 min-w-0 flex-1">
             <p className="text-orange-200 text-xs font-semibold uppercase tracking-wider">Tableau de bord</p>
-            <h1 className="text-2xl font-extrabold text-white leading-tight">
+            <h1 className="text-2xl font-extrabold text-white leading-tight truncate">
               {firstName ? `Bonjour, ${firstName}` : 'Bonjour'}
             </h1>
-            <p className="text-orange-100 text-sm">
+            <p className="text-orange-100 text-sm truncate">
               {seller?.displayName ?? ''}
             </p>
           </div>
@@ -138,7 +138,7 @@ export default function SellerDashboardPage() {
             <Boxes className="h-5 w-5 text-blue-500" />
           </div>
           <p className="text-3xl font-extrabold text-foreground">{totalStock}</p>
-          <p className="text-xs font-semibold text-muted-foreground mt-0.5">Bouteilles en stock</p>
+          <p className="text-xs font-semibold text-muted-foreground mt-0.5 leading-tight">Bouteilles en stock</p>
         </div>
       </div>
 

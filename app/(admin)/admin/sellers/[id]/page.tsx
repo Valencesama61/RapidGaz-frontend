@@ -86,11 +86,11 @@ export default function SellerDetailPage() {
       <div className="flex items-center gap-3">
         <button
           onClick={() => router.back()}
-          className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
+          className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors shrink-0"
         >
           <ArrowLeft className="h-5 w-5 text-gray-600" />
         </button>
-        <h1 className="text-2xl font-bold text-gray-900">{seller.displayName}</h1>
+        <h1 className="text-2xl font-bold text-gray-900 min-w-0 truncate">{seller.displayName}</h1>
       </div>
 
       {error && (

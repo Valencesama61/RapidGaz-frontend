@@ -186,7 +186,7 @@ export default function SellerProfilePage() {
         </form>
       </div>
 
-      {/* Déconnexion — visible uniquement sur mobile (sidebar gère le desktop) */}
+      {/* Déconnexion - visible uniquement sur mobile (sidebar gère le desktop) */}
       <div className="md:hidden">
         <button
           onClick={() => { logout(); router.push('/') }}

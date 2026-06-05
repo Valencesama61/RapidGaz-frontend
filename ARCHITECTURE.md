@@ -1,4 +1,4 @@
-# ARCHITECTURE — RapidGaz Frontend
+# ARCHITECTURE - RapidGaz Frontend
 
 ## 1. Stack & Dépendances
 
@@ -11,7 +11,7 @@
 ### UI & Styles
 - tailwindcss: 3.4.x
 - @tailwindcss/forms: 0.5.x
-- shadcn/ui (via CLI — composants copiés dans components/ui/)
+- shadcn/ui (via CLI - composants copiés dans components/ui/)
 - lucide-react: 0.400.x (icônes)
 - class-variance-authority: 0.7.x
 - clsx: 2.x
@@ -33,16 +33,16 @@
 
 ## 2. Design Patterns
 
-### Routing — Next.js App Router avec Route Groups
+### Routing - Next.js App Router avec Route Groups
 Les route groups permettent de regrouper les layouts sans affecter l'URL :
-- `(public)` — accessible sans authentification, layout minimal
-- `(auth)` — pages login uniquement, layout centré
-- `(seller)` — layout avec SellerNav (bottom bar / sidebar), middleware vérifie rôle SELLER
-- `(admin)` — layout avec AdminNav, middleware vérifie rôle ADMIN ou SUPER_ADMIN
+- `(public)` - accessible sans authentification, layout minimal
+- `(auth)` - pages login uniquement, layout centré
+- `(seller)` - layout avec SellerNav (bottom bar / sidebar), middleware vérifie rôle SELLER
+- `(admin)` - layout avec AdminNav, middleware vérifie rôle ADMIN ou SUPER_ADMIN
 
 Chaque groupe dispose de son propre `layout.tsx` qui injecte la navigation adaptée.
 
-### Authentification JWT — Zustand + js-cookie
+### Authentification JWT - Zustand + js-cookie
 ```
 login() → appel API → reçoit accessToken
        → stocker dans js-cookie (httpOnly impossible côté client, donc cookie standard)
@@ -60,9 +60,9 @@ L'intercepteur `request` lit le token depuis `Cookies.get('rapidgaz_token')` et 
 `Authorization: Bearer {token}` sur chaque requête.
 L'intercepteur `response` intercepte les 401 : vide le store et redirige vers `/login`.
 
-### Protection de routes — middleware.ts
+### Protection de routes - middleware.ts
 Le middleware Next.js s'exécute sur le Edge Runtime avant le rendu.
-Il lit le cookie `rapidgaz_token`, vérifie sa présence (pas la signature — Edge Runtime
+Il lit le cookie `rapidgaz_token`, vérifie sa présence (pas la signature - Edge Runtime
 ne peut pas importer jose facilement).
 - `/seller/*` : redirige vers `/login` si pas de token
 - `/admin/*` : redirige vers `/login` si pas de token
@@ -420,13 +420,13 @@ Pour /login :
 | Warning | #f59e0b | amber-500 |
 
 ### Composants shadcn/ui utilisés
-- `Button` — variante `default` (orange) et `outline`
+- `Button` - variante `default` (orange) et `outline`
 - `Card`, `CardContent`, `CardHeader`, `CardTitle`
 - `Dialog`, `DialogContent`, `DialogHeader`, `DialogTitle`
 - `Input`
 - `Label`
 - `Select`, `SelectContent`, `SelectItem`, `SelectTrigger`, `SelectValue`
-- `Badge` — pour statuts (ouvert/fermé, actif/suspendu)
+- `Badge` - pour statuts (ouvert/fermé, actif/suspendu)
 
 ### Conventions CSS/Tailwind
 ```

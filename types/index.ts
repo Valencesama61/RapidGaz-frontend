@@ -23,7 +23,7 @@ export interface Seller {
   createdAt?: string
 }
 
-// Enums stricts — valeurs exactes utilisées par le backend
+// Enums stricts - valeurs exactes utilisées par le backend
 export type Brand = 'ORYX' | 'JNP' | 'TOTAL'
 export type GasSize = 'KG_6' | 'KG_12' | 'KG_25'
 
